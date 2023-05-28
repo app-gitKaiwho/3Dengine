@@ -6,7 +6,7 @@
 #    By: lvon-war <lvonwar42@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 16:52:50 by lvon-war          #+#    #+#              #
-#    Updated: 2023/05/28 17:35:04 by lvon-war         ###   ########.fr        #
+#    Updated: 2023/05/28 20:43:08 by lvon-war         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ ENAME	=	3D.exe
 NAME	=	3D.a
 CFLAGS	=	-Wall -Werror -Wextra
 AR		=	ar -rsc
-FILES	=	math.c main.c keyhook.c mousehook.c draw.c
+FILES	=	math.c main.c keyhook.c mousehook.c trianglecalc.c
 
 # Path for .c , .h and .o Files 
 LIBFT	=	./include/libft/lib.a
