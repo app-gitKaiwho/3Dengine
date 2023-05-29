@@ -12,39 +12,59 @@
 
 #include "3D.h"
 
-void put_pixel(t_point p, t_data *d)
+void put_pixel(t_point2d p, t_data d)
 {
-	mlx_pixel_put(d->s.mlx, d->s.win, p.x + (d->s.l / 2), p.y + (d->s.h / 2), 0xFFFFFFFF);
+	mlx_pixel_put(d.s.mlx, d.s.win, p.x + (d.s.l / 2), p.y + (d.s.h / 2), 0xFFFFFFFF);
 }
 
-double area(t_triangle tri)
+void	put_line(t_line l, t_data d)
 {
-    return ((ft_abs(tri.a.x * (tri.b.y-tri.c.y) + tri.b.x * 
-		(tri.c.y-tri.a.y) + tri.c.x * (tri.a.y-tri.b.y))) * 0.5)
-}
+	double	slope;
+	int		signe;
+	int		x;
+	int		y;
+	int		drawn_point;
 
-bool isInside(int x1, int y1, int x2, int y2, int x3, int y3, int x, int y)
-{
-	double A;
-	double A1;
-	double A2;
-	double A3;
-
-	A = area(x1, y1, x2, y2, x3, y3);
-	A1 = area(x, y, x2, y2, x3, y3);
-	A2 = area(x1, y1, x, y, x3, y3);
-	A3 = area(x1, y1, x2, y2, x, y);
-   return (A == A1 + A2 + A3);
+	drawn_point = 0;
+	signe = 1;
+	x = l.a.x;
+	y = l.a.y;
+	slope = (double)(l.z.y - l.a.y) / (double)(l.z.x - l.a.x);
+	if (fabs(slope) > 1)
+	{
+		if (l.a.x > l.z.x)
+			signe = -1;
+		while (ft_abs(x - l.z.x) > 1)
+		{
+			put_pixel((t_point2d){x, y}, d);
+			x += signe;
+			y = (slope * (x - l.a.x)) + l.a.y;
+			drawn_point++;
+		}
+	}
+	else
+	{
+		if (l.a.y > l.z.y)
+			signe = -1;
+		while (ft_abs(y - l.z.y) > 1)
+		{
+			put_pixel((t_point2d){x, y}, d);
+			y += signe;
+			x = (y - l.a.y) / slope + l.a.x;
+			drawn_point++;
+		}
+	}
+	ft_printf("%d\n", drawn_point);
 }
 
 void draw_triangle(t_triangle tri, t_data *d)
 {
 	t_triangle casted;
-	int	j;
-	int i;
 
 	casted.a = raycast(tri.a, *d);
 	casted.b = raycast(tri.b, *d);
 	casted.c = raycast(tri.c, *d);
-
+	put_line((t_line){casted.a, casted.b}, *d);
+	put_line((t_line){casted.b, casted.c}, *d);
+	put_line((t_line){casted.c, casted.a}, *d);
 }

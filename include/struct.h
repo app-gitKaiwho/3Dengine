@@ -32,9 +32,9 @@ typedef struct window
 
 typedef struct point
 {
-	double	x;
-	double	y;
-	double	z;
+	int	x;
+	int	y;
+	int	z;
 }t_point;
 
 typedef struct map
@@ -84,6 +84,12 @@ typedef struct data
 	t_mouse		m;
 	float		g_size;
 }t_data;
+
+typedef struct point2d
+{
+	int	x;
+	int	y;
+}t_point2d;
 
 typedef struct iterator
 {
